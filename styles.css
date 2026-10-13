@@ -24,3 +24,67 @@ header nav,.button,.text-link,.filters button,.gallery-caption strong,.services 
   .round-stamp{width:clamp(82px,23vw,108px);height:clamp(82px,23vw,108px)}
   .form-row{grid-template-columns:1fr;gap:0}
 }
+
+/* The celebration edit: an editorial photo collection. */
+#work .gallery-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:18px 24px;margin:34px 0 40px;padding:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.gallery-invite{font-family:Georgia,'Times New Roman',serif;font-size:23px;color:var(--ink);line-height:1.25;margin-right:auto}
+.gallery-invite em{color:var(--purple)}
+#work .filters{gap:6px}
+#work .filters button{background:var(--white);min-height:40px;padding:9px 14px;transition:background .2s,border-color .2s}
+#work .filters button:hover{background:var(--sage-soft);border-color:#a5b495}
+#work .filters button.active{background:var(--purple);border-color:var(--purple);color:var(--white)}
+#work #gallery-count{width:100%;text-align:right;font-size:10px;letter-spacing:.04em}
+#work .gallery{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:42px 28px;align-items:start}
+#work .gallery-card{grid-column:span 4;min-width:0;position:relative;border-radius:10px}
+#work .gallery-card:nth-child(8n+1){grid-column:span 7}
+#work .gallery-card:nth-child(8n+2),#work .gallery-card:nth-child(8n+6){grid-column:span 5}
+#work .gallery-card:nth-child(8n+7){grid-column:span 3}
+#work .gallery-image{height:clamp(260px,27vw,350px);aspect-ratio:auto;border-radius:12px;isolation:isolate}
+#work .gallery-card:nth-child(8n+1) .gallery-image,#work .gallery-card:nth-child(8n+2) .gallery-image{height:clamp(340px,35vw,440px)}
+#work .gallery-card:nth-child(8n+2) .gallery-image,#work .gallery-card:nth-child(8n+7) .gallery-image{border-radius:230px 230px 12px 12px}
+#work .gallery-card:nth-child(8n+3),#work .gallery-card:nth-child(8n+8){padding:12px 12px 16px;background:var(--white);box-shadow:0 8px 25px #30272e0d;border:1px solid #ebe2e6;border-radius:3px}
+#work .gallery-card:nth-child(8n+3) .gallery-image,#work .gallery-card:nth-child(8n+8) .gallery-image{height:clamp(236px,calc(27vw - 24px),326px);border-radius:3px}
+#work .gallery-card:nth-child(8n+3):before,#work .gallery-card:nth-child(8n+8):before{content:'';position:absolute;top:-10px;left:calc(50% - 34px);height:23px;width:68px;background:#dce5d0e8;transform:rotate(-5deg);z-index:2;pointer-events:none}
+#work .gallery-card:nth-child(8n+8):before{transform:rotate(5deg)}
+#work .gallery-card:nth-child(8n+5) .gallery-image{border-radius:12px 100px 12px 12px}
+#work .gallery-card:nth-child(8n+6) .gallery-image{border-radius:100px 12px 12px 12px}
+#work .gallery-card img{height:100%;width:100%;object-fit:cover;transition:transform .5s}
+#work .gallery-card:hover img{transform:scale(1.035)}
+#work .gallery-caption{display:flex;gap:13px;margin-top:17px;align-items:baseline;justify-content:flex-start}
+.gallery-number{font-size:10px;font-weight:650;color:var(--purple);flex-shrink:0;line-height:1.5;border-top:1px solid #a5b495;padding-top:7px;min-width:24px}
+.gallery-words{min-width:0}
+#work .gallery-caption strong{font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:24px;line-height:1.2;letter-spacing:-.025em;display:block}
+#work .gallery-caption small{display:block;font-size:9px;font-weight:650;letter-spacing:.09em;text-transform:uppercase;margin-top:8px;line-height:1.5}
+#work .gallery-card:nth-child(8n+3) .gallery-caption strong,#work .gallery-card:nth-child(8n+8) .gallery-caption strong{font-style:italic}
+#work .gallery-card .view-mark{opacity:1;background:var(--sage);color:var(--ink);width:38px;height:38px;right:14px;bottom:14px;box-shadow:0 2px 10px #30272e12;transition:background .2s,color .2s}
+#work .gallery-card:hover .view-mark,#work .gallery-card:focus-visible .view-mark{background:var(--purple);color:var(--white)}
+#work .gallery-bottom{margin-top:48px}
+@media(max-width:1100px){
+  #work .gallery{gap:32px 20px}
+  .gallery-invite{width:100%}
+  #work #gallery-count{width:auto;margin-left:auto}
+  #work .gallery-caption strong{font-size:21px}
+}
+@media(max-width:760px){
+  #work .gallery-toolbar{gap:18px;margin:26px 0 32px;padding:20px 0}
+  .gallery-invite{font-size:23px}
+  #work .filters{width:100%;gap:7px}
+  #work .filters button{font-size:10px;padding:9px 12px}
+  #work #gallery-count{margin:0;text-align:left;font-size:10px}
+  #work .gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 16px}
+  #work .gallery-card:nth-child(n){grid-column:span 1}
+  #work .gallery-card:nth-child(8n+1),#work .gallery-card:nth-child(8n+6){grid-column:1/-1}
+  #work .gallery-card:nth-child(n) .gallery-image{height:auto;aspect-ratio:3/4}
+  #work .gallery-card:nth-child(8n+1) .gallery-image,#work .gallery-card:nth-child(8n+6) .gallery-image{aspect-ratio:4/3}
+  #work .gallery-card:nth-child(8n+3),#work .gallery-card:nth-child(8n+8){padding:8px 8px 13px}
+  #work .gallery-card:nth-child(8n+3):before,#work .gallery-card:nth-child(8n+8):before{width:50px;height:18px;left:calc(50% - 25px);top:-8px}
+  #work .gallery-card:nth-child(8n+5) .gallery-image{border-top-right-radius:65px}
+  #work .gallery-card:nth-child(8n+6) .gallery-image{border-top-left-radius:80px}
+  #work .gallery-caption{gap:8px;margin-top:12px}
+  .gallery-number{min-width:18px;font-size:9px;padding-top:5px}
+  #work .gallery-caption strong{font-size:19px;line-height:1.22}
+  #work .gallery-card:nth-child(8n+1) .gallery-caption strong,#work .gallery-card:nth-child(8n+6) .gallery-caption strong{font-size:27px}
+  #work .gallery-caption small{font-size:8px;letter-spacing:.04em;margin-top:6px}
+  #work .gallery-card .view-mark{width:32px;height:32px;right:9px;bottom:9px}
+  #work .gallery-bottom{margin-top:36px;gap:24px}
+}

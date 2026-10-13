@@ -6,10 +6,37 @@ const more=document.querySelector('#more');
 const lightbox=document.querySelector('#lightbox');
 let portfolio=[], filtered=[], shown=8, current=0, lastTrigger=null;
 const labels={birthday:'Birthdays',shower:'Showers & milestones',details:'The little extras'};
-function render(){gallery.replaceChildren();filtered.slice(0,shown).forEach(item=>{const button=document.createElement('button');button.className='gallery-card';button.type='button';button.setAttribute('aria-label',`View ${item.title}`);const holder=document.createElement('div');holder.className='gallery-image';const img=document.createElement('img');img.src='/'+item.file;img.alt=item.title+' — event styling by Events by Emcee Co.';img.loading='lazy';img.width=640;img.height=853;const plus=document.createElement('span');plus.className='view-mark';plus.textContent='+';plus.setAttribute('aria-hidden','true');holder.append(img,plus);const caption=document.createElement('div');caption.className='gallery-caption';const title=document.createElement('strong');title.textContent=item.title;const category=document.createElement('small');category.textContent=labels[item.category];caption.append(title,category);button.append(holder,caption);button.addEventListener('click',()=>{current=filtered.indexOf(item);lastTrigger=button;showPhoto();lightbox.showModal();document.body.classList.add('modal-open');});gallery.append(button);});count.textContent=`${filtered.length} moments to explore`;more.hidden=shown>=filtered.length;}
+const featuredOrder=[4,18,9,1,15,5,12,7];
+function portfolioRank(item){const number=Number(item.file.match(/(\d+)\./)[1]);const rank=featuredOrder.indexOf(number);return rank<0?featuredOrder.length+number:rank;}
+function render(){
+  gallery.replaceChildren();
+  filtered.slice(0,shown).forEach((item,index)=>{
+    const button=document.createElement('button');
+    button.className='gallery-card';button.type='button';
+    button.setAttribute('aria-label',`View ${item.title}`);
+    const holder=document.createElement('div');holder.className='gallery-image';
+    const img=document.createElement('img');img.src='/'+item.file;
+    img.alt=item.title+' — event styling by Events by Emcee Co.';
+    img.loading='lazy';img.width=640;img.height=853;
+    const plus=document.createElement('span');plus.className='view-mark';
+    plus.innerHTML='<svg class="ui-icon" viewBox="0 0 24 24"><path d="M8 4H4v4m12-4h4v4M4 16v4h4m12-4v4h-4"/></svg>';
+    plus.setAttribute('aria-hidden','true');holder.append(img,plus);
+    const caption=document.createElement('div');caption.className='gallery-caption';
+    const number=document.createElement('span');number.className='gallery-number';
+    number.textContent=String(index+1).padStart(2,'0');number.setAttribute('aria-hidden','true');
+    const words=document.createElement('div');words.className='gallery-words';
+    const title=document.createElement('strong');title.textContent=item.title;
+    const category=document.createElement('small');category.textContent=labels[item.category];
+    words.append(title,category);caption.append(number,words);button.append(holder,caption);
+    button.addEventListener('click',()=>{current=index;lastTrigger=button;showPhoto();lightbox.showModal();document.body.classList.add('modal-open');});
+    gallery.append(button);
+  });
+  count.textContent=`Showing ${Math.min(shown,filtered.length)} of ${filtered.length} happy moments`;
+  more.hidden=shown>=filtered.length;
+}
 function showPhoto(){const p=filtered[current];document.querySelector('#lightbox-image').src='/'+p.file;document.querySelector('#lightbox-image').alt=p.title;document.querySelector('#lightbox-title').textContent=`${p.title} · ${current+1} / ${filtered.length}`;document.querySelector('#lightbox-source').href=p.post;}
 function movePhoto(direction){current=(current+direction+filtered.length)%filtered.length;showPhoto();}
-fetch('/portfolio.json').then(r=>{if(!r.ok)throw Error('Portfolio unavailable');return r.json();}).then(data=>{portfolio=data;filtered=[...portfolio].sort((a,b)=>[4,18,9,1,15,5,12,7].indexOf(Number(b.file.match(/(\d+)\./)[1]))-[4,18,9,1,15,5,12,7].indexOf(Number(a.file.match(/(\d+)\./)[1])));render();}).catch(()=>{const p=document.createElement('p');p.textContent='See our latest celebrations on Instagram using the link below.';gallery.append(p);more.hidden=true;});
+fetch('/portfolio.json').then(r=>{if(!r.ok)throw Error('Portfolio unavailable');return r.json();}).then(data=>{portfolio=[...data].sort((a,b)=>portfolioRank(a)-portfolioRank(b));filtered=[...portfolio];render();}).catch(()=>{const p=document.createElement('p');p.textContent='See our latest celebrations on Instagram using the link below.';gallery.append(p);more.hidden=true;});
 document.querySelectorAll('[data-filter]').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('[data-filter]').forEach(b=>{b.classList.toggle('active',b===button);b.setAttribute('aria-pressed',String(b===button));});filtered=portfolio.filter(p=>button.dataset.filter==='all'||p.category===button.dataset.filter);shown=8;render();}));
 more.addEventListener('click',()=>{const previous=shown;shown+=8;render();gallery.children[previous]?.focus({preventScroll:true});});
 document.querySelector('.lightbox-close').addEventListener('click',()=>lightbox.close());
